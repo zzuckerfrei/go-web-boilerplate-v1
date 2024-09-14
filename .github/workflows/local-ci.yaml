@@ -1,0 +1,121 @@
+name: Build and Push Docker Image
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  trigger:
+    runs-on: self-hosted
+    #runs-on: ubuntu-latest
+    
+    if: ${{ contains(github.event.head_commit.message, '#onprem') }}
+    steps:
+      - name: start
+        run: echo "onprem trigger on"
+
+
+  build-and-push:
+    needs: trigger
+    runs-on: self-hosted
+    #runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
+
+      - name: Set up QEMU
+        uses: docker/setup-qemu-action@v2
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v2
+
+      - name: Set up Go
+        uses: actions/setup-go@v3
+        with:
+          go-version: 1.22
+
+      - name: Log in to Azure CLI
+        uses: azure/login@v1
+        with:
+          creds: ${{ secrets.AZURE_CREDENTIALS }}
+
+      - name: Log in to skuber ACR
+        run: |
+          echo "${{ secrets.SKUBER_ACR_PASSWORD }}" | docker login skuber.azurecr.io -u "${{ secrets.SKUBER_ACR_USERNAME }}" --password-stdin
+
+      - name: Get latest tag
+        id: get_latest_tag
+        run: |
+          ACR_NAME=${{ secrets.SKUBER_ACR_NAME }}
+          REPOSITORY_NAME=${{ secrets.REPOSITORY_NAME }}
+          LATEST_TAG=$(az acr repository show-tags --name $ACR_NAME --repository $REPOSITORY_NAME --orderby time_desc --output tsv --top 1)
+
+          if [[ -z "$LATEST_TAG" ]]; then
+            echo "No tags found. Starting with v1.0.0"
+            echo "latest_tag=v1.0.0" >> $GITHUB_ENV
+          else
+            echo "Latest tag found: $LATEST_TAG"
+            echo "latest_tag=$LATEST_TAG" >> $GITHUB_ENV
+          fi
+
+      - name: Determine new tag
+        id: determine_new_tag
+        run: |
+          LATEST_TAG=${{ env.latest_tag }}
+          VERSION=${LATEST_TAG#v}
+          IFS='.' read -r -a VERSION_PARTS <<< "$VERSION"
+          MAJOR=${VERSION_PARTS[0]}
+          MINOR=${VERSION_PARTS[1]}
+          PATCH=${VERSION_PARTS[2]}
+
+          COMMIT_MESSAGE=$(git log -1 --pretty=%B)
+
+          if [[ "$COMMIT_MESSAGE" == *"#major"* ]]; then
+            NEW_MAJOR=$((MAJOR + 1))
+            NEW_TAG="v$NEW_MAJOR.0.0"
+          elif [[ "$COMMIT_MESSAGE" == *"#minor"* ]]; then
+            NEW_MINOR=$((MINOR + 1))
+            NEW_TAG="v$MAJOR.$NEW_MINOR.0"
+          else
+            NEW_PATCH=$((PATCH + 1))
+            NEW_TAG="v$MAJOR.$MINOR.$NEW_PATCH"
+          fi
+
+          echo "new_tag=$NEW_TAG" >> $GITHUB_ENV
+          echo "New tag determined: $NEW_TAG"
+
+      - name: Build Docker image
+        run: |
+          ACR_NAME=${{ secrets.SKUBER_ACR_NAME }}
+          REPOSITORY_NAME=${{ secrets.REPOSITORY_NAME }}
+          NEW_TAG=${{ env.new_tag }}
+          docker build -t $ACR_NAME.azurecr.io/$REPOSITORY_NAME:$NEW_TAG .
+
+      - name: Push Docker image to skuber ACR
+        run: |
+          ACR_NAME=${{ secrets.SKUBER_ACR_NAME }}
+          REPOSITORY_NAME=${{ secrets.REPOSITORY_NAME }}
+          NEW_TAG=${{ env.new_tag }}
+          docker push $ACR_NAME.azurecr.io/$REPOSITORY_NAME:$NEW_TAG
+      
+      # slack notification
+      - name: action-slack
+        uses: 8398a7/action-slack@v3
+        with:
+          status: custom
+          fields: workflow, job, commit, repo, ref, author, took
+          custom_payload: |
+            {
+              "attachments": [
+                {
+                  "color": "${{ job.status == 'success' && 'good' || job.status == 'failure' && 'danger' || 'warning' }}",
+                  "text": "{\n    *\"Repository\":* \"${{ github.repository }}\",\n    *\"Ref\":* \"${{ github.ref }}\",\n    *\"Tag Version\":* \"${{    env.new_tag    }}\",\n    *\"Author\":* \"${{ github.actor }}\",\n    *\"Status\":* \"${{ job.status }}\",\n    *\"Commit Message\":* \"${{ github.event.head_commit.message }}\"\n}"
+                }
+              ]
+            }
+          if_mention: failure,cancelled
+        env:
+          SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
+        if: always() # Pick up events even if the job fails or is canceled.
