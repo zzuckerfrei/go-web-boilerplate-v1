@@ -1,0 +1,6 @@
+{"level":"info","ts":"2024-09-18T16:41:52.066+0900","caller":"go-web-boilerplate-v1/main.go:25","msg":"INFO log level message"}
+{"level":"warn","ts":"2024-09-18T16:41:52.067+0900","caller":"go-web-boilerplate-v1/main.go:26","msg":"Warn log level message"}
+{"level":"error","ts":"2024-09-18T16:41:52.067+0900","caller":"go-web-boilerplate-v1/main.go:27","msg":"Error log level message","stacktrace":"main.main\n\t/Users/smlee/go/src/github.com/zzuckerfrei/go-web-boilerplate-v1/main.go:27\nruntime.main\n\t/opt/homebrew/Cellar/go/1.22.2/libexec/src/runtime/proc.go:271"}
+{"level":"INFO","ts":"2024-09-18T16:50:34.431+0900","caller":"go-web-boilerplate-v1/main.go:25","msg":"INFO log level message"}
+{"level":"WARN","ts":"2024-09-18T16:50:34.431+0900","caller":"go-web-boilerplate-v1/main.go:26","msg":"Warn log level message"}
+{"level":"ERROR","ts":"2024-09-18T16:50:34.431+0900","caller":"go-web-boilerplate-v1/main.go:27","msg":"Error log level message","stacktrace":"main.main\n\t/Users/smlee/go/src/github.com/zzuckerfrei/go-web-boilerplate-v1/main.go:27\nruntime.main\n\t/opt/homebrew/Cellar/go/1.22.2/libexec/src/runtime/proc.go:271"}
