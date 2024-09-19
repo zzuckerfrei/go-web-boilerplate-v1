@@ -7,19 +7,19 @@ on:
 
 jobs:
   trigger:
-    runs-on: self-hosted
-    #runs-on: ubuntu-latest
+    # runs-on: self-hosted
+    runs-on: ubuntu-latest
     
-    if: ${{ contains(github.event.head_commit.message, '#onprem') }}
+    if: ${{ contains(github.event.head_commit.message, '#test') }}
     steps:
       - name: start
-        run: echo "onprem trigger on"
+        run: echo "test trigger on"
 
 
   build-and-push:
     needs: trigger
-    runs-on: self-hosted
-    #runs-on: ubuntu-latest
+    # runs-on: self-hosted
+    runs-on: ubuntu-latest
 
     steps:
       - name: Checkout repository
