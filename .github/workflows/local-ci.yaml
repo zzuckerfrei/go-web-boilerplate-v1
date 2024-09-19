@@ -8,7 +8,7 @@ on:
 jobs:
   webhook-test:
     runs-on: ubuntu-latest
-    if: ${{ contains(github.event.head_commit.message, '#webhook') }}
+    if: ${{ contains(github.event.head_commit.message, '#webhook') }} 
     steps:
       - name: start
         run: echo "webhook start"
