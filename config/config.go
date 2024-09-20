@@ -6,6 +6,7 @@ import (
 	"github.com/spf13/viper"
 )
 
+// todo
 func GetConfig(env string, confFiles map[string]string) (*viper.Viper, error) {
 	conf := viper.New()
 	conf.SetDefault("environment", env)

@@ -46,11 +46,11 @@ func getRotateLogger(filename string) *lumberjack.Logger {
 
 func GetLogger(filename string) (*zap.Logger, error) {
 	// Configure the format
-	config := getEncoderConfig()
+	encoderConfig := getEncoderConfig()
 
 	// Create file and console encoders
-	fileEncoder := zapcore.NewJSONEncoder(config)
-	consoleEncoder := zapcore.NewConsoleEncoder(config)
+	fileEncoder := zapcore.NewJSONEncoder(encoderConfig)
+	consoleEncoder := zapcore.NewConsoleEncoder(encoderConfig)
 
 	// Open the log file
 	rotateLogger := getRotateLogger(filename)
@@ -60,6 +60,7 @@ func GetLogger(filename string) (*zap.Logger, error) {
 	consoleWriter := zapcore.AddSync(os.Stdout)
 
 	// Set the log level
+	// todo
 	defaultLogLevel := zapcore.DebugLevel
 
 	// Create cores for writing to the file and console
