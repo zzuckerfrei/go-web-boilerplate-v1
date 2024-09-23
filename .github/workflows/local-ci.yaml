@@ -160,6 +160,5 @@ jobs:
           # custom  PAYLOAD
           PAYLOAD: |-
             {
-              "color": "${{ job.status == 'success' && 'good' || job.status == 'failure' && 'danger' || 'warning' }}",
-              "text": "{\n    *\"Repository\":* \"${{ github.repository }}\",\n    *\"Ref\":* \"${{ github.ref }}\",\n    *\"Tag Version\":* \"${{    env.new_tag    }}\",\n    *\"Author\":* \"${{ github.actor }}\",\n    *\"Status\":* \"${{ job.status }}\",\n    *\"Commit Message\":* \"${{ github.event.head_commit.message }}\"\n}"
+              "text": "{\n    **\"Repository\":** \"${{ github.repository }}\",\n    **\"Ref\":** \"${{ github.ref }}\",\n    **\"Tag Version\":** \"${{    env.new_tag    }}\",\n    **\"Author\":** \"${{ github.actor }}\",\n    **\"Status\":** \"${{ job.status }}\",\n    **\"Commit Message\":** \"${{ github.event.head_commit.message }}\"\n}"
             }
