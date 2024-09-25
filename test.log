@@ -1,2 +1,12 @@
 {"level":"INFO","timestamp":"2024-09-18T18:06:14.752+0900","caller":"go-web-boilerplate-v1/main.go:19","message":"111111111"}
 {"level":"INFO","timestamp":"2024-09-20T19:00:54.116+0900","caller":"go-web-boilerplate-v1/main.go:19","message":"111111111"}
+{"level":"INFO","timestamp":"2024-09-23T18:50:26.809+0900","caller":"go-web-boilerplate-v1/main.go:36","message":"111111111"}
+{"level":"INFO","timestamp":"2024-09-23T18:50:26.809+0900","caller":"go-web-boilerplate-v1/main.go:37","message":"flash"}
+{"level":"INFO","timestamp":"2024-09-23T18:53:18.364+0900","caller":"go-web-boilerplate-v1/main.go:36","message":"111111111"}
+{"level":"INFO","timestamp":"2024-09-23T18:53:18.364+0900","caller":"go-web-boilerplate-v1/main.go:37","message":"flash"}
+{"level":"INFO","timestamp":"2024-09-23T18:55:36.345+0900","caller":"go-web-boilerplate-v1/main.go:37","message":"111111111"}
+{"level":"INFO","timestamp":"2024-09-23T18:55:36.345+0900","caller":"go-web-boilerplate-v1/main.go:38","message":"eks-flash"}
+{"level":"INFO","timestamp":"2024-09-23T18:56:56.036+0900","caller":"go-web-boilerplate-v1/main.go:37","message":"111111111"}
+{"level":"INFO","timestamp":"2024-09-23T18:56:56.036+0900","caller":"go-web-boilerplate-v1/main.go:38","message":"eks-flash"}
+{"level":"INFO","timestamp":"2024-09-23T18:57:07.631+0900","caller":"go-web-boilerplate-v1/main.go:37","message":"111111111"}
+{"level":"INFO","timestamp":"2024-09-23T18:57:07.631+0900","caller":"go-web-boilerplate-v1/main.go:38","message":"aks-flash"}

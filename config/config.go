@@ -1,31 +1,26 @@
 package config
 
 import (
-	"strings"
+	"fmt"
 
 	"github.com/spf13/viper"
 )
 
-// todo
-func GetConfig(env string, confFiles map[string]string) (*viper.Viper, error) {
-	conf := viper.New()
-	conf.SetDefault("environment", env)
+func GetConfig(env string) error {
+	viper.SetConfigName("config-" + env) // config 파일 이름 (확장자 제외)
+	viper.SetConfigType("yaml")          // 설정 파일 타입 지정
+	viper.AddConfigPath(".")             // 현재 디렉토리에서 env.yaml 파일 찾기
 
-	// Conf Env
-	conf.SetEnvKeyReplacer(strings.NewReplacer(".", "_", "_", "__")) // APP_DATA__BASE_PASS -> app.data_base.pass
-	conf.AutomaticEnv()                                              // Automatically load Env variables
-
-	// Conf Files
-	//conf.SetConfigType("yaml") 				// We're using yaml
-	conf.SetConfigName(env)                   // Search for a config file that matches our environment
-	conf.AddConfigPath("./src/config/" + env) // look for config in the working directory
-	conf.ReadInConfig()                       // Find and read the config file
-
-	// Read additional files
-	for confFile := range confFiles {
-		conf.SetConfigName(confFile)
-		conf.MergeInConfig()
+	// 설정 파일 읽기
+	if err := viper.ReadInConfig(); err != nil {
+		if _, ok := err.(viper.ConfigFileNotFoundError); ok {
+			// 설정 파일을 찾을 수 없음
+			return fmt.Errorf("Config file not found: %v", err)
+		} else {
+			// 다른 에러 발생
+			return fmt.Errorf("Error reading config file: %v", err)
+		}
 	}
 
-	return conf, nil
+	return nil
 }

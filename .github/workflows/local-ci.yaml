@@ -123,40 +123,11 @@ jobs:
           REPOSITORY_NAME=${{ secrets.REPOSITORY_NAME }}
           NEW_TAG=${{ env.new_tag }}
           docker push $ACR_NAME.azurecr.io/$REPOSITORY_NAME:$NEW_TAG
-      
-      # slack notification
-      # - name: action-slack
-      #   uses: 8398a7/action-slack@v3
-      #   with:
-      #     status: custom
-      #     fields: workflow, job, commit, repo, ref, author, took
-      #     custom_payload: |
-      #       {
-      #         "attachments": [
-      #           {
-      #             "color": "${{ job.status == 'success' && 'good' || job.status == 'failure' && 'danger' || 'warning' }}",
-      #             "text": "{\n    *\"Repository\":* \"${{ github.repository }}\",\n    *\"Ref\":* \"${{ github.ref }}\",\n    *\"Tag Version\":* \"${{    env.new_tag    }}\",\n    *\"Author\":* \"${{ github.actor }}\",\n    *\"Status\":* \"${{ job.status }}\",\n    *\"Commit Message\":* \"${{ github.event.head_commit.message }}\"\n}"
-      #           }
-      #         ]
-      #       }
-      #     if_mention: failure,cancelled
-      #   env:
-      #     SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
-      #   if: always() # Pick up events even if the job fails or is canceled.
 
       # MM notification
       - uses: mattermost/action-mattermost-notify@master
         with:
           MATTERMOST_WEBHOOK_URL: ${{ secrets.MM_WEBHOOK_URL }}
-          # default PAYLOAD
-          # PAYLOAD: |-
-          #   {
-          #     "text": "What a message from ${{ github.repository }}",
-          #     "channel": "the-best-channel",
-          #     "username": "${{ github.triggering_actor }}",
-          #     "icon": "https://cdn3.iconfinder.com/data/icons/system-basic-vol-4-1/20/icon-note-attention-alt3-512.png"
-          #   }
-
           # custom  PAYLOAD
           PAYLOAD: |-
             {

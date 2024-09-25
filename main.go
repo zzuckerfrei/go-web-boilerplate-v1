@@ -2,8 +2,12 @@ package main
 
 import (
 	"fmt"
+	"go-web-boilerplate-v1/config"
 	"go-web-boilerplate-v1/middleware"
+	"log"
 	"net/http"
+
+	"github.com/spf13/viper"
 )
 
 func helloHandler(w http.ResponseWriter, r *http.Request) {
@@ -11,12 +15,22 @@ func helloHandler(w http.ResponseWriter, r *http.Request) {
 }
 
 func main() {
-	filename := "./test.log"
+	// config
+	env := "aks" // todo Dockerfile
+	// env := "eks" // todo Dockerfile
+	if err := config.GetConfig(env); err != nil {
+		log.Fatal("Cannot get config:", err)
+	}
+	name := viper.GetString("name")
+
+	// log
+	filename := "./test.log" // todo Dockerfile
 	logger, err := middleware.GetLogger(filename)
 	if err != nil {
 		fmt.Println("getLogger err")
 	}
 	logger.Info("111111111")
+	logger.Info(name)
 
 	// web
 	http.HandleFunc("/", helloHandler)
