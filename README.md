@@ -6,10 +6,16 @@
 ├── .github
 │   └── workflows
 │      └── local-ci.yaml
+├── config
+│   └── config.go
+├── middleware
+│   └── logger.go
 ├── Dockerfile 
 ├── go.mod
 ├── main.go
-└── w-lab-onprem-ci-test
+├── config-aks.yaml
+├── config-eks.yaml
+└── test.log
 ```
 
 ## Version Management
