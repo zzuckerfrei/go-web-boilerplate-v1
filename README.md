@@ -1,4 +1,4 @@
-# go-web-poilerplate-v1
+# go-web-boilerplate-v1
 
 ## Project Architecture
 ```
