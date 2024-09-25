@@ -15,21 +15,21 @@ func helloHandler(w http.ResponseWriter, r *http.Request) {
 }
 
 func main() {
-	// config
-	env := "aks" // todo Dockerfile
-	// env := "eks" // todo Dockerfile
-	if err := config.GetConfig(env); err != nil {
-		log.Fatal("Cannot get config:", err)
-	}
-	name := viper.GetString("name")
-
 	// log
-	filename := "./test.log" // todo Dockerfile
+	filename := "./test.log" // todo config
 	logger, err := middleware.GetLogger(filename)
 	if err != nil {
 		fmt.Println("getLogger err")
 	}
 	logger.Info("111111111")
+
+	// config
+	// env := "aks" // todo Dockerfile
+	env := "eks" // todo Dockerfile
+	if err := config.GetConfig(env); err != nil {
+		log.Fatal("Cannot get config:", err)
+	}
+	name := viper.GetString("name")
 	logger.Info(name)
 
 	// web

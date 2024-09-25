@@ -9,7 +9,7 @@ import (
 func GetConfig(env string) error {
 	viper.SetConfigName("config-" + env) // config 파일 이름 (확장자 제외)
 	viper.SetConfigType("yaml")          // 설정 파일 타입 지정
-	viper.AddConfigPath(".")             // 현재 디렉토리에서 env.yaml 파일 찾기
+	viper.AddConfigPath("./config")      // 현재 디렉토리에서 config-'env'.yaml 파일 찾기
 
 	// 설정 파일 읽기
 	if err := viper.ReadInConfig(); err != nil {

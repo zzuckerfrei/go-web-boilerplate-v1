@@ -10,3 +10,14 @@
 {"level":"INFO","timestamp":"2024-09-23T18:56:56.036+0900","caller":"go-web-boilerplate-v1/main.go:38","message":"eks-flash"}
 {"level":"INFO","timestamp":"2024-09-23T18:57:07.631+0900","caller":"go-web-boilerplate-v1/main.go:37","message":"111111111"}
 {"level":"INFO","timestamp":"2024-09-23T18:57:07.631+0900","caller":"go-web-boilerplate-v1/main.go:38","message":"aks-flash"}
+{"level":"INFO","timestamp":"2024-09-25T20:52:24.780+0900","caller":"go-web-boilerplate-v1/main.go:32","message":"111111111"}
+{"level":"INFO","timestamp":"2024-09-25T20:52:24.780+0900","caller":"go-web-boilerplate-v1/main.go:33","message":"aks-flash"}
+{"level":"INFO","timestamp":"2024-09-25T21:13:30.042+0900","caller":"go-web-boilerplate-v1/main.go:24","message":"111111111"}
+{"level":"INFO","timestamp":"2024-09-25T21:14:16.155+0900","caller":"go-web-boilerplate-v1/main.go:24","message":"111111111"}
+{"level":"INFO","timestamp":"2024-09-25T21:14:16.155+0900","caller":"go-web-boilerplate-v1/main.go:33","message":"aks-flash"}
+{"level":"INFO","timestamp":"2024-09-25T21:15:20.083+0900","caller":"go-web-boilerplate-v1/main.go:24","message":"111111111"}
+{"level":"INFO","timestamp":"2024-09-25T21:15:20.084+0900","caller":"go-web-boilerplate-v1/main.go:33","message":"aks-flash"}
+{"level":"INFO","timestamp":"2024-09-25T21:17:08.561+0900","caller":"go-web-boilerplate-v1/main.go:24","message":"111111111"}
+{"level":"INFO","timestamp":"2024-09-25T21:17:08.562+0900","caller":"go-web-boilerplate-v1/main.go:33","message":"aks-flash"}
+{"level":"INFO","timestamp":"2024-09-25T21:18:08.312+0900","caller":"go-web-boilerplate-v1/main.go:24","message":"111111111"}
+{"level":"INFO","timestamp":"2024-09-25T21:18:08.312+0900","caller":"go-web-boilerplate-v1/main.go:33","message":"eks-flash"}

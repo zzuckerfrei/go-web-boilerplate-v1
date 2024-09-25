@@ -60,7 +60,7 @@ func GetLogger(filename string) (*zap.Logger, error) {
 	consoleWriter := zapcore.AddSync(os.Stdout)
 
 	// Set the log level
-	// todo
+	// todo setLogLevel
 	defaultLogLevel := zapcore.DebugLevel
 
 	// Create cores for writing to the file and console
